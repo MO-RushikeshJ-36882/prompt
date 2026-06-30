@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang='hi'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Prompt Engineering & Token Saving</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0a0a1a;
+      color: white;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .slide {
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      padding: 60px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      animation: fadeIn 0.5s ease;
+    }
+    .slide.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Slide Themes */
+    .slide-1 { background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460); }
+    .slide-2 { background: linear-gradient(135deg, #0d0d0d, #1a0533, #2d0b61); }
+    .slide-3 { background: linear-gradient(135deg, #0a1628, #1e3a5f, #0e4d92); }
+    .slide-4 { background: linear-gradient(135deg, #0d1f0d, #1a3a1a, #0f5e0f); }
+    .slide-5 { background: linear-gradient(135deg, #2d1b00, #5c3d00, #8b5e00); }
+    .slide-6 { background: linear-gradient(135deg, #1a0000, #3d0000, #6b0000); }
+    .slide-7 { background: linear-gradient(135deg, #001a2d, #003366, #0055a5); }
+    .slide-8 { background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460); }
+
+    h1 { font-size: 2.8em; margin-bottom: 15px; text-shadow: 0 0 30px rgba(255,255,255,0.3); }
+    h2 { font-size: 2em; margin-bottom: 20px; color: #ffd700; }
+    h3 { font-size: 1.4em; margin-bottom: 15px; color: #87ceeb; }
+    p { font-size: 1.2em; line-height: 1.8; max-width: 800px; }
+    .subtitle { font-size: 1.3em; color: #87ceeb; margin-bottom: 10px; }
+    .emoji-big { font-size: 4em; margin-bottom: 20px; }
+
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      max-width: 900px;
+      margin-top: 20px;
+    }
+    .tip-card {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 12px;
+      padding: 15px;
+      text-align: left;
+      backdrop-filter: blur(10px);
+    }
+    .tip-card h4 { color: #ffd700; margin-bottom: 8px; font-size: 1em; }
+    .tip-card p { font-size: 0.9em; color: #ddd; }
+
+    .formula-box {
+      background: rgba(255,255,255,0.1);
+      border: 2px solid #ffd700;
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 700px;
+      margin-top: 20px;
+    }
+    .formula-box .part { margin: 10px 0; font-size: 1.1em; }
+    .formula-box .label { color: #ffd700; font-weight: bold; }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 800px;
+      margin-top: 20px;
+    }
+    .compare-card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 25px;
+    }
+    .bad { border: 2px solid #ff4444; }
+    .good { border: 2px solid #44ff44; }
+    .bad h4 { color: #ff6666; }
+    .good h4 { color: #66ff66; }
+
+    .savings-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 700px;
+      margin-top: 20px;
+    }
+    .savings-card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .savings-card.bad { border: 2px solid #ff4444; }
+    .savings-card.good { border: 2px solid #44ff44; }
+    .big-number { font-size: 2em; font-weight: bold; color: #ffd700; }
+
+    .conclusion-list {
+      list-style: none;
+      margin-top: 20px;
+      text-align: left;
+    }
+    .conclusion-list li {
+      font-size: 1.3em;
+      margin: 15px 0;
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      border-left: 4px solid #ffd700;
+    }
+
+    .hindi-script {
+      background: rgba(255,215,0,0.1);
+      border: 1px solid #ffd700;
+      border-radius: 10px;
+      padding: 15px 25px;
+      margin-top: 20px;
+      font-style: italic;
+      font-size: 1.1em;
+      color: #ffd700;
+      max-width: 800px;
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      z-index: 100;
+    }
+    .nav button {
+      background: rgba(255,255,255,0.2);
+      border: 2px solid rgba(255,255,255,0.4);
+      color: white;
+      padding: 12px 30px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1em;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
+    }
+    .nav button:hover { background: rgba(255,255,255,0.4); transform: scale(1.05); }
+    .slide-counter {
+      background: rgba(0,0,0,0.5);
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      color: #ffd700;
+    }
+
+    /* Progress Bar */
+    .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #ffd700, #ff6b35);
+      transition: width 0.3s;
+      z-index: 100;
+    }
+
+    /* Girl Avatar */
+    .girl-avatar {
+      position: fixed;
+      bottom: 80px;
+      right: 30px;
+      font-size: 4em;
+      animation: bounce 2s infinite;
+      z-index: 100;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Audio Script Box */
+    .audio-hint {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255,215,0,0.2);
+      border: 1px solid #ffd700;
+      border-radius: 10px;
+      padding: 8px 15px;
+      font-size: 0.8em;
+      color: #ffd700;
+      z-index: 100;
+    }
+  </style>
+</head>
+<body>
+
+<div class='progress' id='progress'></div>
+<div class='audio-hint'>🎙️ Hindi Script Below Each Slide</div>
+<div class='girl-avatar'>👩‍💼</div>
+
+<!-- SLIDE 1 - Title -->
+<div class='slide slide-1 active'>
+  <div class='emoji-big'>🤖💡</div>
+  <h1>Prompt Engineering</h1>
+  <h2>aur Token Saving</h2>
+  <p class='subtitle'>AI se Smart Tarike se Baat Karo — Paisa Bachao!</p>
+  <br>
+  <p style='font-size:1em; color:#87ceeb;'>Presented by: AI Guide 👧</p>
+  <div class='hindi-script'>🎙️ "Namaste doston! Aaj hum sikhenge Prompt Engineering kya hoti hai aur tokens kaise bachaye jaate hain!"</div>
+</div>
+
+<!-- SLIDE 2 - Prompt Kya Hai -->
+<div class='slide slide-2'>
+  <div class='emoji-big'>✍️</div>
+  <h2>Prompt Kya Hota Hai?</h2>
+  <div class='compare-grid'>
+    <div class='compare-card bad'>
+      <h4>❌ Galat Prompt</h4>
+      <p>"Hello AI aap kaise ho, kya aap please mujhe is text ko summarize karne mein help kar sakte ho?"</p>
+    </div>
+    <div class='compare-card good'>
+      <h4>✅ Sahi Prompt</h4>
+      <p>"Summarize: [text]"</p>
+      <br>
+      <p style='color:#ffd700;'>💡 Chota = Acha = Sasta!</p>
+    </div>
+  </div>
+  <div class='hindi-script'>🎙️ "Prompt matlab AI ko jo aap likhte ho. Jitna chota aur clear likho, utna acha jawab aur utna kam paisa!"</div>
+</div>
+
+<!-- SLIDE 3 - Token Kya Hai -->
+<div class='slide slide-3'>
+  <div class='emoji-big'>🪙</div>
+  <h2>Token Kya Hota Hai?</h2>
+  <div class='formula-box'>
+    <div class='part'><span class='label'>"Main"</span> = 1 Token</div>
+    <div class='part'><span class='label'>"Main AI use karta hun"</span> = 5 Tokens</div>
+    <div class='part'><span class='label'>"Artificial Intelligence"</span> = 2 Tokens</div>
+    <br>
+    <div class='part' style='font-size:1.3em; color:#ffd700;'>💰 1000 Tokens = ₹0.10 se ₹0.25</div>
+    <div class='part' style='color:#ff6666;'>Zyada Token = Zyada Paisa! ❌</div>
+    <div class='part' style='color:#66ff66;'>Kam Token = Kam Paisa! ✅</div>
+  </div>
+  <div class='hindi-script'>🎙️ "Token matlab text ka chota tukda. Jitne zyada tokens use hoge, utna zyada bill aayega. Isliye tokens bachana zaroori hai!"</div>
+</div>
+
+<!-- SLIDE 4 - 6 Tips -->
+<div class='slide slide-4'>
+  <h2>6 Token Bachane ke Tips 💡</h2>
+  <div class='tips-grid'>
+    <div class='tip-card'>
+      <h4>💡 Tip 1 — Chota Likho</h4>
+      <p>❌ Lamba sentence<br>✅ Short keywords</p>
+    </div>
+    <div class='tip-card'>
+      <h4>💡 Tip 2 — No Greeting</h4>
+      <p>❌ "Hello AI kaise ho"<br>✅ Seedha kaam ki baat</p>
+    </div>
+    <div class='tip-card'>
+      <h4>💡 Tip 3 — Output Limit</h4>
+      <p>✅ "Sirf 2 lines mein batao"<br>✅ "3 points mein"</p>
+    </div>
+    <div class='tip-card'>
+      <h4>💡 Tip 4 — Keywords</h4>
+      <p>❌ Poora sentence<br>✅ Bas keywords likho</p>
+    </div>
+    <div class='tip-card'>
+      <h4>💡 Tip 5 — No Repeat</h4>
+      <p>❌ Baar baar paste karo<br>✅ "Upar diya data dekho"</p>
+    </div>
+    <div class='tip-card'>
+      <h4>💡 Tip 6 — Batch Karo</h4>
+      <p>❌ 5 alag messages<br>✅ Sab ek saath pucho</p>
+    </div>
+  </div>
+  <div class='hindi-script'>🎙️ "Yeh 6 tips follow karo aur apne tokens ki bachat shuru karo aaj se hi!"</div>
+</div>
+
+<!-- SLIDE 5 - Formula -->
+<div class='slide slide-5'>
+  <div class='emoji-big'>🧪</div>
+  <h2>Perfect Prompt Formula</h2>
+  <div class='formula-box'>
+    <div class='part'><span class='label'>ROLE</span> → AI ko batao ki vo kaun hai</div>
+    <div class='part'><span class='label'>TASK</span> → Kya karna hai</div>
+    <div class='part'><span class='label'>FORMAT</span> → Jawab kaisi tarah chahiye</div>
+    <div class='part'><span class='label'>LIMIT</span> → Kitna chota jawab chahiye</div>
+    <br>
+    <div class='part' style='color:#ffd700; font-size:1.1em;'>✅ Example:</div>
+    <div class='part' style='color:#ccc;'>"Tu ek finance expert hai. SIP ko 5 bullet points mein simple Hindi mein samjhao."</div>
+  </div>
+  <div class='hindi-script'>🎙️ "Role, Task, Format aur Limit — yeh 4 parts milake banate hain perfect prompt!"</div>
+</div>
+
+<!-- SLIDE 6 - Savings -->
+<div class='slide slide-6'>
+  <div class='emoji-big'>💰</div>
+  <h2>Paisa Bachane ka Real Example</h2>
+  <h3>Customer Support Chatbot — 10,000 Queries/Day</h3>
+  <div class='savings-box'>
+    <div class='savings-card bad'>
+      <h4 style='color:#ff6666;'>❌ Bina Optimization</h4>
+      <p>800 tokens/query</p>
+      <div class='big-number'>₹80,000</div>
+      <p>per month</p>
+    </div>
+    <div class='savings-card good'>
+      <h4 style='color:#66ff66;'>✅ Token Saving ke Baad</h4>
+      <p>200 tokens/query</p>
+      <div class='big-number'>₹20,000</div>
+      <p>per month</p>
+    </div>
+  </div>
+  <br>
+  <p style='font-size:1.5em; color:#ffd700;'>🎉 BACHAT = ₹60,000 har mahine!</p>
+  <div class='hindi-script'>🎙️ "Sirf token saving tips follow karke aap 60,000 rupaye bachaa sakte ho har mahine!"</div>
+</div>
+
+<!-- SLIDE 7 - Conclusion -->
+<div class='slide slide-7'>
+  <div class='emoji-big'>🚀</div>
+  <h2>Conclusion — Yaad Rakho!</h2>
+  <ul class='conclusion-list'>
+    <li>✅ Chota Prompt = Smart Prompt</li>
+    <li>✅ Kam Token = Kam Paisa</li>
+    <li>✅ Clear Instructions = Acha Jawab</li>
+    <li>✅ Output Limit = Aur Bachat</li>
+  </ul>
+  <br>
+  <p style='font-size:1.3em; color:#ffd700;'>🚀 "Sirf AI use mat karo... AI se SMART tarike se baat karo!"</p>
+  <div class='hindi-script'>🎙️ "Yeh 4 baatein hamesha yaad rakhna aur AI ko smart tarike se use karna!"</div>
+</div>
+
+<!-- SLIDE 8 - Thank You -->
+<div class='slide slide-8'>
+  <div class='emoji-big'>🙏</div>
+  <h1>Shukriya!</h1>
+  <h2>Bahut Bahut Dhanyawaad!</h2>
+  <p class='subtitle'>Topic: Prompt Engineering & Token Saving</p>
+  <br>
+  <p style='font-size:1.2em;'>❓ Sawaal Poochh Sakte Ho!</p>
+  <br>
+  <p style='color:#87ceeb;'>👧 Presented by AI Guide</p>
+  <p style='color:#ffd700; font-size:0.9em; margin-top:10px;'>🔗 github.com/MO-RushikeshJ-36882/prompt</p>
+  <div class='hindi-script'>🎙️ "Bahut bahut shukriya! Agar koi sawaal ho toh zaroor poochhiye. Alvida!"</div>
+</div>
+
+<!-- Navigation -->
+<div class='nav'>
+  <button onclick='changeSlide(-1)'>⬅ Pichla</button>
+  <span class='slide-counter' id='counter'>1 / 8</span>
+  <button onclick='changeSlide(1)'>Agla ➡</button>
+</div>
+
+<script>
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+
+  function changeSlide(dir) {
+    slides[current].classList.remove('active');
+    current = (current + dir + total) % total;
+    slides[current].classList.add('active');
+    document.getElementById('counter').textContent = (current + 1) + ' / ' + total;
+    document.getElementById('progress').style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') changeSlide(1);
+    if (e.key === 'ArrowLeft') changeSlide(-1);
+  });
+
+  // Set initial progress
+  document.getElementById('progress').style.width = (1 / total * 100) + '%';
+</script>
+
+</body>
+</html>

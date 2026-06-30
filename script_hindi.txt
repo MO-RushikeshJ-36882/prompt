@@ -1,0 +1,96 @@
+====================================================
+  HINDI AUDIO SCRIPT - GIRL VOICE
+  Topic: Prompt Engineering & Token Saving
+  Copy each slide script to Murf AI / Narakeet
+====================================================
+
+----------------------------
+SLIDE 1 - INTRODUCTION
+----------------------------
+Namaste doston! Main hoon aapki AI guide.
+Aaj hum sikhenge — Prompt Engineering kya
+hoti hai aur apne AI tokens kaise bachaye.
+Yeh topic aapke liye bahut useful hoga.
+Toh chaliye shuru karte hain!
+
+----------------------------
+SLIDE 2 - PROMPT KYA HAI?
+----------------------------
+Prompt matlab — vo text jo aap AI ko
+likhte ho. Jaise aap Google mein search
+karte ho, waise hi AI ko prompt dete ho.
+Lekin agar prompt lamba aur confusing
+hoga, toh AI ka jawab bhi acha nahi hoga.
+Isliye hamesha chota aur clear prompt likho!
+
+----------------------------
+SLIDE 3 - TOKEN KYA HAI?
+----------------------------
+Token matlab text ka chota tukda.
+Jaise Main ek token hai.
+Artificial Intelligence do token hai.
+Jitne zyada token use hoge,
+utna zyada paisa lagega.
+Isliye tokens bachana matlab paisa bachana!
+
+----------------------------
+SLIDE 4 - 6 TIPS
+----------------------------
+Pehla tip — Hamesha chota likho.
+Doosra tip — AI ko Hello mat kaho.
+Teesra tip — Output ki limit lagao.
+Chautha tip — Poore sentence ki jagah
+keywords use karo.
+Paanchwa tip — Same cheez baar baar
+mat paste karo.
+Chhaata tip — Saare sawaal ek saath pucho!
+In 6 tips se aap bahut saare tokens
+baacha sakte ho!
+
+----------------------------
+SLIDE 5 - PERFECT PROMPT FORMULA
+----------------------------
+Perfect prompt ke 4 parts hote hain.
+Pehla — Role. AI ko batao ki vo kaun hai.
+Doosra — Task. Kya karna hai.
+Teesra — Format. Jawab kaisi tarah chahiye.
+Chautha — Limit. Kitna chota jawab chahiye.
+Example: Tu ek finance expert hai.
+SIP ko 5 points mein simple Hindi mein samjhao.
+Bas itna! Perfect prompt ready!
+
+----------------------------
+SLIDE 6 - PAISA BACHANE KA EXAMPLE
+----------------------------
+Ek real example dekhte hain.
+Agar aapka chatbot hai jisme rozana
+10,000 sawaal aate hain.
+Bina optimization ke monthly bill
+aata hai 80,000 rupaye.
+Token saving tips use karo toh
+sirf 20,000 rupaye lagte hain.
+Matalab poore 60,000 rupaye ki
+bachat har mahine! Kaafi hai na?
+
+----------------------------
+SLIDE 7 - CONCLUSION
+----------------------------
+Toh doston, aaj humne seekha ki
+prompt engineering kya hoti hai.
+Yaad rakho — chota aur clear prompt
+hi sabse acha prompt hota hai.
+Jitne kam tokens, utna kam paisa.
+AI ko smart tarike se use karo.
+Apna time aur paisa dono bachao!
+
+----------------------------
+SLIDE 8 - THANK YOU
+----------------------------
+Bahut bahut shukriya aap sabka!
+Agar koi sawaal ho toh zaroor poochhiye.
+Main hoon aapki AI guide, aur aaj ke
+liye itna hi. Phir milenge. Alvida!
+
+====================================================
+END OF SCRIPT
+====================================================
