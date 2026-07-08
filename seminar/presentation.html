@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Engineering in Software Development</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #1a1a2e;
+            color: #333;
+            overflow: hidden;
+            height: 100vh;
+        }
+        .slide {
+            display: none;
+            width: 100vw;
+            height: 100vh;
+            padding: 60px 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .slide.active {
+            display: flex;
+        }
+        .slide h1 {
+            font-size: 2.8em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .slide h2 {
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid rgba(255,255,255,0.5);
+            padding-bottom: 15px;
+        }
+        .slide p, .slide li {
+            font-size: 1.4em;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+        .slide ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .slide ul li::before {
+            content: '▸ ';
+            color: #ffd700;
+        }
+        .slide .highlight {
+            background: rgba(255,255,255,0.15);
+            padding: 20px 30px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 5px solid #ffd700;
+        }
+        .slide .code-box {
+            background: rgba(0,0,0,0.4);
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            margin: 15px 0;
+        }
+        .slide table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+        .slide th, .slide td {
+            padding: 12px 20px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+        }
+        .slide th {
+            background: rgba(255,255,255,0.2);
+        }
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+        }
+        .controls button {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+        .controls button:hover {
+            background: rgba(255,255,255,0.4);
+        }
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            color: rgba(255,255,255,0.7);
+            font-size: 1em;
+        }
+        .title-slide {
+            text-align: center;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+        }
+        .title-slide h1 {
+            font-size: 3.2em;
+            margin-bottom: 30px;
+        }
+        .title-slide p {
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+        .thank-slide {
+            text-align: center;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+        }
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Slide 1: Title -->
+<div class="slide title-slide active">
+    <h1>🚀 Prompt Engineering<br>in Software Development</h1>
+    <p>A Complete Guide to Communicating with AI</p>
+    <br>
+    <p>Presented by: [Your Name]</p>
+    <p>Department: [Your Department]</p>
+    <p>Date: [Date]</p>
+</div>
+
+<!-- Slide 2: Agenda -->
+<div class="slide">
+    <h2>📋 Agenda</h2>
+    <ul>
+        <li>What is Prompt Engineering?</li>
+        <li>Why is it Important?</li>
+        <li>Applications in Software Development</li>
+        <li>Types of Prompting</li>
+        <li>Key Techniques (5 techniques)</li>
+        <li>Best Practices</li>
+        <li>Tools & Platforms</li>
+        <li>Real-World Examples</li>
+        <li>Future Scope & Career in India</li>
+        <li>Q&A</li>
+    </ul>
+</div>
+
+<!-- Slide 3: What is Prompt Engineering -->
+<div class="slide">
+    <h2>💡 What is Prompt Engineering?</h2>
+    <p>The process of designing and optimizing input instructions given to AI models to get accurate and useful outputs.</p>
+    <br>
+    <div class="highlight">
+        <p>Think of it as <strong>"talking to AI in the right way"</strong></p>
+    </div>
+    <br>
+    <div class="code-box">
+        ❌ "Write code" → Vague<br><br>
+        ✅ "Write a Python function that takes a list of numbers and returns the average" → Clear!
+    </div>
+</div>
+
+<!-- Slide 4: Why Important -->
+<div class="slide">
+    <h2>❓ Why is it Important?</h2>
+    <ul>
+        <li>✅ No need to retrain expensive AI models</li>
+        <li>✅ Saves development time (10x faster coding)</li>
+        <li>✅ Improves accuracy of AI-generated code</li>
+        <li>✅ Reduces bugs and errors</li>
+        <li>✅ Essential skill for modern developers</li>
+        <li>✅ Growing job demand in India & worldwide</li>
+    </ul>
+    <div class="highlight">
+        <p>"By 2026, 80% of software developers will use AI coding assistants daily." — Gartner</p>
+    </div>
+</div>
+
+<!-- Slide 5: Applications -->
+<div class="slide">
+    <h2>🛠️ Applications in Software Development</h2>
+    <ul>
+        <li>💻 Code Generation</li>
+        <li>🐛 Bug Fixing & Debugging</li>
+        <li>📝 Documentation Writing</li>
+        <li>🧪 Test Case Generation</li>
+        <li>🔍 Code Review & Refactoring</li>
+        <li>🤖 Building Chatbots</li>
+        <li>📊 Data Analysis & SQL Queries</li>
+        <li>🎨 UI/UX Design Suggestions</li>
+    </ul>
+</div>
+
+<!-- Slide 6: Types -->
+<div class="slide">
+    <h2>📂 Types of Prompting</h2>
+    <table>
+        <tr><th>Type</th><th>Description</th></tr>
+        <tr><td>Zero-Shot</td><td>No example, only instruction</td></tr>
+        <tr><td>One-Shot</td><td>One example provided</td></tr>
+        <tr><td>Few-Shot</td><td>2-5 examples provided</td></tr>
+        <tr><td>Chain-of-Thought</td><td>Step-by-step reasoning</td></tr>
+        <tr><td>Role-Based</td><td>Assign a role to AI</td></tr>
+    </table>
+</div>
+
+<!-- Slide 7: Zero-Shot -->
+<div class="slide">
+    <h2>1️⃣ Zero-Shot Prompting</h2>
+    <p><strong>Definition:</strong> Give only instruction, no examples.</p>
+    <div class="code-box">
+        Prompt: "Write a Java function to check if a number is prime."
+    </div>
+    <br>
+    <ul>
+        <li>✅ Best for: Simple, well-known tasks</li>
+        <li>❌ May fail for: Complex or domain-specific tasks</li>
+    </ul>
+</div>
+
+<!-- Slide 8: Few-Shot -->
+<div class="slide">
+    <h2>2️⃣ Few-Shot Prompting</h2>
+    <p><strong>Definition:</strong> Provide examples before the actual task.</p>
+    <div class="code-box">
+        "Convert function names to descriptive text:<br><br>
+        getUserData → Get User Data<br>
+        calculateTotal → Calculate Total<br>
+        sendEmailNotification → ?"<br><br>
+        <strong>Output: Send Email Notification</strong>
+    </div>
+    <br>
+    <ul>
+        <li>✅ Best for: Pattern-based tasks</li>
+    </ul>
+</div>
+
+<!-- Slide 9: Chain-of-Thought -->
+<div class="slide">
+    <h2>3️⃣ Chain-of-Thought Prompting</h2>
+    <p><strong>Definition:</strong> Ask AI to reason step by step.</p>
+    <div class="code-box">
+        "A developer writes 50 lines per hour. Project needs 2000 lines.<br>
+        How many 8-hour days? <strong>Think step by step.</strong>"<br><br>
+        Step 1: Lines per day = 50 × 8 = 400<br>
+        Step 2: Days needed = 2000 ÷ 400 = <strong>5 days</strong>
+    </div>
+    <br>
+    <ul>
+        <li>✅ Best for: Math, logic, debugging</li>
+    </ul>
+</div>
+
+<!-- Slide 10: Role-Based -->
+<div class="slide">
+    <h2>4️⃣ Role-Based Prompting</h2>
+    <p><strong>Definition:</strong> Assign a specific role/persona to AI.</p>
+    <div class="code-box">
+        "You are a senior Python developer with 10 years of experience.<br>
+        Review this code and suggest improvements for performance."
+    </div>
+    <div class="code-box">
+        "You are a QA engineer.<br>
+        Write test cases for a login page with email and password."
+    </div>
+    <br>
+    <ul>
+        <li>✅ Gives expert-level, focused output</li>
+    </ul>
+</div>
+
+<!-- Slide 11: Prompt Chaining -->
+<div class="slide">
+    <h2>5️⃣ Prompt Chaining</h2>
+    <p><strong>Definition:</strong> Break big tasks into smaller steps.</p>
+    <div class="highlight">
+        <p>Output of Step 1 → Input of Step 2</p>
+    </div>
+    <div class="code-box">
+        Step 1: "List features for e-commerce cart"<br>
+        Step 2: "Create database schema for above"<br>
+        Step 3: "Write REST API endpoints"<br>
+        Step 4: "Generate React components for UI"
+    </div>
+    <br>
+    <ul>
+        <li>✅ Best for: Large, multi-step projects</li>
+    </ul>
+</div>
+
+<!-- Slide 12: Best Practices -->
+<div class="slide">
+    <h2>✅ Best Practices</h2>
+    <ul>
+        <li>1️⃣ Be CLEAR and SPECIFIC → Tell exactly what you want</li>
+        <li>2️⃣ Specify OUTPUT FORMAT → "Return as JSON / table"</li>
+        <li>3️⃣ Give CONTEXT → Mention language, framework</li>
+        <li>4️⃣ Set CONSTRAINTS → "In 50 words", "Python 3.10+"</li>
+        <li>5️⃣ ITERATE and REFINE → Improve your prompt!</li>
+        <li>6️⃣ Use EXAMPLES → Show AI what you expect</li>
+    </ul>
+</div>
+
+<!-- Slide 13: Common Mistakes -->
+<div class="slide">
+    <h2>❌ Common Mistakes to Avoid</h2>
+    <ul>
+        <li>❌ Too vague: "Write some code"</li>
+        <li>❌ Too long: 500-word unstructured prompt</li>
+        <li>❌ No context: Not mentioning language</li>
+        <li>❌ No format: Not specifying output type</li>
+        <li>❌ No constraints: No word limit or scope</li>
+        <li>❌ Copy-pasting sensitive data</li>
+        <li>❌ Trusting AI without verification</li>
+    </ul>
+    <div class="highlight">
+        <p>⚠️ REMEMBER: AI can be wrong! Always review output.</p>
+    </div>
+</div>
+
+<!-- Slide 14: Tools -->
+<div class="slide">
+    <h2>🧰 Tools & Platforms</h2>
+    <table>
+        <tr><th>Tool</th><th>Use Case</th></tr>
+        <tr><td>GitHub Copilot</td><td>AI code assistant in IDE</td></tr>
+        <tr><td>ChatGPT / GPT-4</td><td>General-purpose AI</td></tr>
+        <tr><td>Google Gemini</td><td>Multimodal AI</td></tr>
+        <tr><td>Claude</td><td>Long-context tasks</td></tr>
+        <tr><td>LangChain</td><td>Prompt chaining framework</td></tr>
+        <tr><td>Cursor IDE</td><td>AI-first code editor</td></tr>
+    </table>
+</div>
+
+<!-- Slide 15: Real World Example -->
+<div class="slide">
+    <h2>🌍 Real-World Example</h2>
+    <p><strong>Task:</strong> Create a REST API for Student Management</p>
+    <div class="code-box" style="border-left: 4px solid #ff4444;">
+        ❌ BAD: "Make a student API"
+    </div>
+    <div class="code-box" style="border-left: 4px solid #44ff44;">
+        ✅ GOOD: "You are a backend developer. Create a REST API using Node.js and Express.js with:<br>
+        - GET /students → List all students<br>
+        - POST /students → Add new student<br>
+        - Fields: name, rollNo, marks<br>
+        - Error handling + JSON responses"
+    </div>
+</div>
+
+<!-- Slide 16: India Scope -->
+<div class="slide">
+    <h2>🇮🇳 Career Scope in India</h2>
+    <div class="two-col">
+        <div>
+            <h3 style="margin-bottom:15px;">💼 Job Roles</h3>
+            <ul>
+                <li>Prompt Engineer</li>
+                <li>AI/ML Developer</li>
+                <li>LLM Application Developer</li>
+                <li>AI Integration Specialist</li>
+            </ul>
+        </div>
+        <div>
+            <h3 style="margin-bottom:15px;">💰 Salary Range</h3>
+            <ul>
+                <li>Freshers: ₹4-8 LPA</li>
+                <li>Mid-level: ₹10-18 LPA</li>
+                <li>Senior: ₹20-40 LPA</li>
+            </ul>
+        </div>
+    </div>
+    <div class="highlight" style="margin-top:30px;">
+        <p><strong>Companies:</strong> TCS | Infosys | Wipro | Google | Microsoft | Amazon | Startups</p>
+    </div>
+</div>
+
+<!-- Slide 17: Future -->
+<div class="slide">
+    <h2>🔮 Future of Prompt Engineering</h2>
+    <ul>
+        <li>🔮 AI Agents — Prompts driving autonomous coding</li>
+        <li>🔮 PromptOps — Managing prompts at scale</li>
+        <li>🔮 Prompt Security — Preventing injection attacks</li>
+        <li>🔮 Auto-Optimization — AI writing its own prompts</li>
+        <li>🔮 Multimodal — Text + Image + Voice + Video</li>
+        <li>🔮 Industry-Specific AI — Healthcare, Finance, Edu</li>
+    </ul>
+    <div class="highlight">
+        <p>"The future belongs to those who can communicate effectively with AI."</p>
+    </div>
+</div>
+
+<!-- Slide 18: Summary -->
+<div class="slide">
+    <h2>📝 Key Takeaways</h2>
+    <ul>
+        <li>✅ Prompt Engineering = Talking to AI effectively</li>
+        <li>✅ Be clear, specific, and structured</li>
+        <li>✅ Use techniques: Zero-shot, Few-shot, CoT, Role-based</li>
+        <li>✅ Always verify AI output</li>
+        <li>✅ Practice daily with ChatGPT & Copilot</li>
+        <li>✅ Growing career opportunity in India</li>
+    </ul>
+    <div class="highlight">
+        <p>🎯 <strong>"Better prompts = Better code = Better developer"</strong></p>
+    </div>
+</div>
+
+<!-- Slide 19: References -->
+<div class="slide">
+    <h2>📚 References</h2>
+    <ul>
+        <li>OpenAI Documentation — platform.openai.com/docs</li>
+        <li>Prompt Engineering Guide — promptingguide.ai</li>
+        <li>GitHub Copilot — github.com/features/copilot</li>
+        <li>LangChain — docs.langchain.com</li>
+        <li>Google AI Gemini — ai.google.dev</li>
+    </ul>
+</div>
+
+<!-- Slide 20: Thank You -->
+<div class="slide thank-slide">
+    <h1>🙏 Thank You!</h1>
+    <br>
+    <h2 style="border:none;">Questions & Answers 🙋</h2>
+    <br>
+    <p>Name: [Your Name]</p>
+    <p>Email: [Your Email]</p>
+    <p>LinkedIn: [Your Profile]</p>
+    <br>
+    <div class="highlight" style="display:inline-block;">
+        <p>"The best way to learn prompt engineering is to practice every single day!"</p>
+    </div>
+</div>
+
+<!-- Controls -->
+<div class="controls">
+    <button onclick="prevSlide()">◀ Prev</button>
+    <button onclick="nextSlide()">Next ▶</button>
+</div>
+<div class="slide-counter" id="counter">1 / 20</div>
+
+<script>
+    let current = 0;
+    const slides = document.querySelectorAll('.slide');
+    const counter = document.getElementById('counter');
+
+    function showSlide(n) {
+        slides[current].classList.remove('active');
+        current = (n + slides.length) % slides.length;
+        slides[current].classList.add('active');
+        counter.textContent = (current + 1) + ' / ' + slides.length;
+    }
+
+    function nextSlide() { showSlide(current + 1); }
+    function prevSlide() { showSlide(current - 1); }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+        if (e.key === 'ArrowLeft') prevSlide();
+    });
+</script>
+</body>
+</html>
